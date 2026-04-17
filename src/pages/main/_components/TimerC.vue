@@ -1,6 +1,6 @@
 <template>
   <div class="time">
-    <!-- <h2 class="text-[32px] md:text-[72px] font-semibold text-center mb-8">
+    <h2 class="text-[32px] md:text-[72px] font-semibold text-center mb-8">
       {{ $t("timer.title") }}
     </h2>
     <div
@@ -18,7 +18,7 @@
       <p class="text-[12px] md:text-[24px] font-medium text-center">
         {{ $t("timer.description") }}
       </p>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -31,9 +31,9 @@ const timeText = ["дней", "часа", "минут", "секунд"];
 
 setInterval(() => {
   timer.value = countdown(
-    new Date(2025, 9, 1, 0, 0),
+    new Date(2026, 4, 1, 0, 0),
     null,
-    countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS
+    countdown.DAYS | countdown.HOURS | countdown.MINUTES | countdown.SECONDS,
   ).toString();
 }, 1000);
 </script>

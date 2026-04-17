@@ -109,7 +109,7 @@
         </template> -->
       </div>
       <div
-        class="bg-[#ffffffae] justify-between rounded-[64px] p-10 h-max grid grid-cols-3 gap-4"
+        class="bg-[#ffffffae] justify-between rounded-[64px] p-10 h-max grid gap-4"
       >
         <template v-if="store.voting">
           <p class="text-[24px] font-bold col-span-3">Мои голоса</p>
@@ -164,10 +164,7 @@
           </div>
         </template> -->
         <template v-else>
-          <div
-            class="bg-white justify-between rounded-[64px] p-10"
-            v-if="user?.application_status"
-          >
+          <div class="bg-white justify-between rounded-[64px] p-10">
             <p class="text-[44px] font-medium">
               {{ user?.nomination?.name_ru || $t("profile.project") }}
             </p>
@@ -175,9 +172,8 @@
             <div class="grid grid-cols-2 gap-4 mt-6" v-if="!!user">
               <template
                 v-for="item in [
-                  'essay',
-                  'achievements',
-                  'plan',
+                  'letter_recommendation',
+                  'video',
                   'presentation',
                 ]"
                 :key="item"

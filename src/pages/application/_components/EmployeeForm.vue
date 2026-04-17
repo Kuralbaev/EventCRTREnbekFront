@@ -59,6 +59,22 @@
         />
       </a-form-item>
     </div>
+    <a-form-item
+      :label="$t('application.employee.form.essay.nomination')"
+      class="w-full input"
+    >
+      <a-select
+        v-model:value="currentNomination"
+        class="h-[62px] md:h-[70px] w-full !rounded-[24px] !border-[#E0E5EA] !bg-[#F0F2F4] !text-[14px] md:!text-[20px] !font-medium"
+      >
+        <a-select-option
+          v-for="nomination in store.nominations"
+          :value="nomination.id"
+        >
+          {{ nomination[`name_${locale}`] }}
+        </a-select-option>
+      </a-select>
+    </a-form-item>
 
     <a-divider />
     <p class="text-[20px] md:text-[32px] font-medium mb-4 mt-10">
@@ -171,7 +187,7 @@ import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const { locale, t } = useI18n();
-const { user } = storeToRefs(store);
+const { user, currentNomination } = storeToRefs(store);
 const emit = defineEmits(["status"]);
 
 const requiredRule = computed(() => ({
@@ -192,9 +208,7 @@ const mediaRequiredRule = {
   validator: (_: unknown, value: number | null) => {
     if (value != null && value > 0) return Promise.resolve();
     return Promise.reject(
-      locale.value === "ru"
-        ? "Прикрепите файл"
-        : "Файлды тіркеңіз"
+      locale.value === "ru" ? "Прикрепите файл" : "Файлды тіркеңіз",
     );
   },
 };
@@ -206,14 +220,14 @@ const multiMediaRule = {
     return Promise.reject(
       locale.value === "ru"
         ? "Прикрепите хотя бы один файл"
-        : "Кем дегенде бір файлды тіркеңіз"
+        : "Кем дегенде бір файлды тіркеңіз",
     );
   },
 };
 
 const formState = reactive({
   iin: user.value?.iin != null ? String(user.value.iin) : "",
-  fio: `${user.value?.surname ?? ""} ${user.value?.firstname ?? ""} ${user.value?.secondname ?? ""}`.trim(),
+  fio: `${user.value?.fullName ?? ""}`.trim(),
   birthday: "",
   address: "",
   video: null as number | null,
@@ -228,30 +242,24 @@ const formState = reactive({
 
 const handleFinish = async () => {
   const payload = {
-    iin: formState.iin,
-    fio: formState.fio,
-    birthday: formState.birthday,
-    address: formState.address,
-    video: formState.video,
-    presentation: formState.presentation,
-    letter_recommendation: formState.letter_recommendation,
-    esutd: formState.esutd,
-    employment_record: formState.employment_record,
-    additional_letter_recommendation: formState.additional_letter_recommendation,
-    awards: formState.awards,
-    certificate: formState.certificate,
+    ...formState,
+    nomination: {
+      connect: currentNomination.value,
+    },
+    email: user.value?.iin + "@gmail.com",
+    username: user.value?.inn,
+    confirmed: true,
+    role: 1,
+    password: "Aa123456.",
+    code: user.value?.iin + user.value?.bin,
   };
 
   await axios
-    .post(
-      `${API_URL}/api/applications`,
-      { data: payload },
-      {
-        headers: {
-          Authorization: `Bearer ${TOKEN}`,
-        },
-      }
-    )
+    .post(`${API_URL}/api/users`, payload, {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    })
     .then(() => {
       notification.success({
         message:

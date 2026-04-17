@@ -5,7 +5,7 @@
     </h2>
     <!-- rounded-t-[56px] md:rounded-t-[80px] p-6 md:p-14 pb-[200px] -mb-[370px] hover:-mb-[140px] transition-all duration-400 relative z-10 -->
     <div
-      class="rounded-t-[56px] md:rounded-t-[80px] p-6 md:p-14 pb-16 md:pb-[100px] -mb-[70px] transition-all duration-400 relative z-10"
+      class="rounded-t-[56px] md:rounded-t-[80px] p-6 md:p-14 pb-[200px] -mb-[230px] hover:-mb-[0px] transition-all duration-400 relative z-10"
       v-for="(item, index) in nominations"
       :key="item.id"
       :style="{ background: colors[index] }"
@@ -15,7 +15,7 @@
         :class="[2, 4].includes(index) ? 'text-[#34414A]' : 'text-white'"
       >
         <p class="text-[24px] md:text-[44px] font-medium">
-          {{ item.name }}
+          {{ item[`name_${locale}`] }}
         </p>
         <p
           class="text-[16px] md:text-[32px] font-light italic grid md:grid-cols-[70px_1fr] gap-2 opacity-80"
@@ -34,11 +34,11 @@
               class="w-10 md:w-15"
             />
           </a-tooltip>
-          {{ item.note }}
+          {{ item[`note_${locale}`] }}
         </p>
       </div>
 
-      <!-- <div
+      <div
         @click="
           store.currentNomination = item.id;
           scrollToApplication(item);
@@ -56,7 +56,7 @@
           alt=""
           class="absolute right-10 w-26"
         />
-      </div> -->
+      </div>
     </div>
   </div>
 </template>

@@ -94,10 +94,10 @@ import { connectAndSign } from "../../../helpers/ecp";
 import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons-vue";
 import Button from "../../../components/Button.vue";
 import ApplicationForm from "../../application/ApplicationForm.vue";
-import axios from "axios";
 import { useStore } from "../../../store";
 import { storeToRefs } from "pinia";
 import { useI18n } from "vue-i18n";
+import { message } from "ant-design-vue";
 
 const store = useStore();
 const { user, userType } = storeToRefs(store);
@@ -134,6 +134,8 @@ const getUser = async (signPayload: { xmlData: string }) => {
       },
     ],
   };
+
+  message.success("success");
 
   store.fetchUser({
     ...data.content[0],

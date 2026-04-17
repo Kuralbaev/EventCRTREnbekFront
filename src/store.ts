@@ -14,7 +14,7 @@ export const useStore = defineStore('store', {
     jwt: null as any,
     language: 'ru',
     certificate: [] as any[],
-    voting: true,
+    voting: false,
     users: [] as any[],
     protocol_users: [] as any[],
     users_nomination: [] as any[],

@@ -246,13 +246,15 @@ const handleFinish = async () => {
     nomination: {
       connect: currentNomination.value,
     },
-    email: user.value?.iin + "@gmail.com",
-    username: user.value?.inn,
+    email: (user.value?.bin ?? user.value?.iin) + "@gmail.com",
+    username: user.value?.bin ?? user.value?.iin.toString(),
     confirmed: true,
     role: 1,
     password: "Aa123456.",
     code: user.value?.iin + user.value?.bin,
   };
+
+  console.log(formState, payload);
 
   await axios
     .post(`${API_URL}/api/users`, payload, {

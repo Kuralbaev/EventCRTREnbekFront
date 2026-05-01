@@ -85,28 +85,12 @@
       <div
         class="absolute w-[calc(100%-50px)] md:w-full h-full md:flex justify-center gap-10 top-[calc(100%-40px)] md:top-[calc(100%-20px)]"
       >
-        <template v-if="store.voting">
-          <Button
-            :text="$t('header.button.voting')"
-            color="green"
-            @click="handleSign()"
-            class="mb-4 md:mb-0 w-full md:w-[706px]"
-          />
-        </template>
-        <template v-else>
-          <Button
-            :text="$t('header.button.worker')"
-            color="green"
-            @click="scrollToApplication()"
-            class="mb-4 md:mb-0 w-full md:w-[606px]"
-          />
-          <Button
-            :text="$t('header.button.project')"
-            color="orange"
-            @click="scrollToApplication()"
-            class="w-full md:w-[606px]"
-          />
-        </template>
+        <Button
+          :text="$t('header.button.worker')"
+          color="green"
+          @click="scrollToApplication()"
+          class="mb-4 md:mb-0 w-full md:w-[606px]"
+        />
       </div>
     </div>
   </div>
@@ -142,7 +126,7 @@ const getUser = async (iin: string) => {
         "Content-Type": "application/json",
         "X-API-KEY": "Questionary12#$%",
       },
-    }
+    },
   );
   store.fetchUser({
     ...data.data,

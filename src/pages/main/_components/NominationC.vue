@@ -67,7 +67,7 @@ import { useStore } from "../../../store";
 import { useI18n } from "vue-i18n";
 import { message } from "ant-design-vue";
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const store = useStore();
 const { nominations, company } = storeToRefs(store);
 const colors = [
@@ -85,9 +85,7 @@ const scrollToApplication = (item: any) => {
     if (company.value) {
       store.setUserType("project");
     } else {
-      message.error(
-        "Вы не можете выбрать эту номинацию, так как вы не авторизованы как проект",
-      );
+      message.error(t("action.not_authorized"));
     }
   }
 
